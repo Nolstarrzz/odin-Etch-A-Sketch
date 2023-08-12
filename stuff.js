@@ -37,17 +37,27 @@ function makeBlocks(number)
     return `#${randColor.toUpperCase()}`
 }*/
 
+function getRandomColor() {
+    let letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+
 container.addEventListener('mouseover', (event) => {
+    console.log(getRandomColor())
     console.log(paintType)
     if (event.target.classList.contains('paintSurface')) {
         if(paintType === 'black')
         {
             event.target.style.backgroundColor = 'black';
         }
-        /*else if(paintType === 'blue')
+        else if(paintType === 'rainbow')
         {
-            event.target.style.backgroundColor = 'blue';
-        }*/
+            event.target.style.backgroundColor = getRandomColor();
+        }
         else if(paintType === 'white')
         {
             event.target.style.backgroundColor = 'white';
@@ -58,6 +68,7 @@ container.addEventListener('mouseover', (event) => {
 
 buttons.addEventListener('click', (event) => {
     if (event.target.classList.contains('rainbowButton')){
+        paintType = 'rainbow';
         return paintType;
     }
     else if (event.target.classList.contains('colorButton')){
@@ -82,5 +93,8 @@ buttons.addEventListener('click', (event) => {
     }
 });
 
-numBlocks = parseInt(prompt('How many blocks now? 7-100'));
+do {
+    numBlocks = parseInt(prompt('How many blocks now? 7-100'));
+} while (isNaN(numBlocks) || numBlocks <= 6 || numBlocks > 100);
+
 makeBlocks(numBlocks);
